@@ -1,53 +1,77 @@
-import React, { useState } from 'react';
-import'./Signup.scss';
-import { axiosClient } from '../../../utils/axiosClient';
- 
-
+import React, { useState } from "react";
+import "./Signup.scss";
+import { axiosClient } from "../../../utils/axiosClient";
+import { Link } from "react-router-dom";
 
 function Signup() {
+  const [userDetails, setUserDetails] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
 
-    const [name, setName] = useState('');
-    const [email, setEmail]= useState("");
-    const[password, setPassword] = useState("");
-
-   async function handleSUbmit(e) {
-        e.preventDeafult();
-        try {
-          const result = await axiosClient.post("/auth/singup", {
-            email,
-            password
-        });
-        console.log(result);
-      
+  async function handleSubmit(e) {
+    e.preventDefault();
+    // console.log(userDetails);
+    try {
+      const response = await axiosClient.post("/auth/signup", userDetails);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
-    catch (error) {
-        console.log(error);
-    }
-    }
-    return (
-        <div className="signup">
-        <div className="signup-box"> 
+  }
+  return (
+    <div className="signup">
+      <div className="signup-box">
         <h2 className="heading">Signup</h2>
-        <form onSubmit={handleSUbmit}>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="firstName">First Name</label>
+          <input
+            type="text"
+            className="email"
+            id="firstName"
+            onChange={(e) =>
+              setUserDetails((prev) => ({ ...prev, firstName: e.target.value }))
+            }
+          />
+          <label htmlFor="lastName">Last Name</label>
+          <input
+            type="text"
+            className="email"
+            id="lastName"
+            onChange={(e) =>
+              setUserDetails((prev) => ({ ...prev,lastName: e.target.value }))
+            }
+          />
 
-        <label htmlfor="name">Name</label>
-            <input type="text" className="email" id="name" onChange={(e) => setName(e.target.value)}/>
+          <label htmlFor="email"> Email</label>
+          <input
+            type="email"
+            className="="
+            id="email"
+            onChange={(e) =>
+              setUserDetails((prev) => ({ ...prev, email: e.target.value }))
+            }
+          />
 
-            <label htmlfor="email"> Email</label>
-            <input type="email" className="="email id="email"
-            onChange={(e) => setEmail(e.target.value)}/>  
+          <label htmlFor="password"> password</label>
+          <input
+            type="password"
+            className="password"
+            id="password"
+            onChange={(e) =>
+              setUserDetails((prev) => ({ ...prev, password: e.target.value }))
+            }
+          />
+          <button type="submit">Signup</button>
+        </form>
 
-            <label htmlfor="password"> password</label>
-            <input type="password" className="password" id="password"
-            onChange={(e) => setPassword(e.target.value)}/> 
-             <input type="submit" className="submit" />
-   </form>
-          
-            <p className="subheading">Already have a acouunt Log in <link to="/singup">Sign Up</link></p>
-          
-            </div>
-            </div>
-           
-    );
+        <p className="subheading">
+          Already have a acouunt Log in <Link to="/login">Login-Here</Link>
+        </p>
+      </div>
+    </div>
+  );
 }
 export default Signup;

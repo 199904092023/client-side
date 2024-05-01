@@ -1,22 +1,17 @@
-import React, {useEffect} from "react";
-import {axiosClient} from '../../../utils/axiosClient';
+import React, { useEffect } from "react";
+import { axiosClient } from "../../../utils/axiosClient";
 
 function Home() {
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    useEffect(() => {
-        fetchData()
-    }, [])
-    
-    
-    async function fetchData() {
-        const response = await axiosClient.get('/posts/all');
-        console.log('go the response', response);
-    }
-    
-    return(
-        <div>Home </div>
-    )
-       
+  async function fetchData() {
+    const response = await axiosClient.get("/posts/all");
+    console.log("go the response", response);
+  }
+
+  return <div>Home</div>;
 }
 
 export default Home;
